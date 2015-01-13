@@ -15,8 +15,8 @@
 3. Run the `git add` command. _This records the changes made._ You can give:
 	* Individual File name from status list (Use tab complete)
 	* Wildcard pattern e.g. `*.css` to get all css files
-	* The -A flag. This adds all files. _Note: when adding a folder, the content will not be added rerunt this command to add the files._
-	__ The add command adds all changes to repo.__ These are: adding new files; modifying existing; and deleting.
+	* The -A flag. This adds all files. _Note: when adding a folder, the content will not be added._ Rerun this command to add the files.
+	__The add command adds all changes to repo.__ These are: adding new files; modifying existing; and deleting.
 	![alt text](https://github.com/AndrewStanton94/IntSe1C/blob/master/gitGuide/add.png "add")
 4. Run `git commit -m "message"` _Records all changes with a description_ We will need to make these messages as clear as possible.
 	__Each commit should cover one change, particularly with bug fixes. 1 commit = 1 bug fix__
