@@ -3,22 +3,32 @@
 <head>
     <title>JS demo</title>
     <script>
+        function getAttrAsInt (elem, attr) {
+            return parseInt(elem.getAttribute(attr));
+        }
 
+        function connectionPoint (rec, btm) {
+            var x,y;
+            x = getAttrAsInt(rec, "x") + (getAttrAsInt(rec, "width")/2)
+            y = getAttrAsInt(rec, "y") + btm ? getAttrAsInt(rec, "height") : 0;
+            return [x, y];
+        }
+
+        function newNode (number, name, parent, children) {
+            // body...
+        }
     </script>
 </head>
 <body>
-    <svg width = 500 height = 500>
-        <rect id = "r1" x="1" y="1" width="200" height="100" style="stroke: #009900;
-             stroke-width: 3;
-             fill: none;
-      "/>
-        <text x=20 y =40>Task name</text>
-        <text x=20 y =60>Task number</text>
+    <svg width = 500 height = 500 style="background: #ccc">
+        <g id = "node">
+            <rect id = "r1" x="1" y="1" width="200" height="100" style="stroke: #009900; stroke-width: 3; fill: none; "/>
+            <text x=20 y =40>Task name</text>
+            <text x=20 y =60>Task number</text>
+        </g>
 
-        <rect id = "r2" x="1" y="251" width="200" height="100" style="stroke: #009900;
-             stroke-width: 3;
-             fill: none;
-      "/>
+        <use id=n1 xlink:href="#node"/>
+        <rect id = "r2" x="1" y="251" width="200" height="100" style="stroke: #009900; stroke-width: 3; fill: none; "/>
         <text x=20 y =290>Task name</text>
         <text x=20 y =310>Task number</text>
 
