@@ -1,24 +1,44 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JS demo</title>
+    <title>SVG demo</title>
     <script>
         function getAttrAsInt (elem, attr) {
+            // (int) elem.attr
             return parseInt(elem.getAttribute(attr));
         }
 
-        function connectionPoint (rec, btm) {
+        function connectionPoint (elem, isBtm) {
             var x,y;
-            x = getAttrAsInt(rec, "x") + (getAttrAsInt(rec, "width")/2)
-            y = getAttrAsInt(rec, "y") + btm ? getAttrAsInt(rec, "height") : 0;
+            x = getAttrAsInt(elem, "x") + (getAttrAsInt(elem, "width")/2)
+            y = getAttrAsInt(elem, "y") + isBtm ? getAttrAsInt(elem, "height") : 0;
             return [x, y];
         }
 
-        function newNode (svgElem, number, name, parent, children) {
-        	console.log("In function");
+        function newTextComponent (parent, x, y, text) {
+            // Add a text element to the node. Giving , location and text content
+            var component = document.createElement("text");
+            parent.appendChild(component);
+            component.setAttribute("x", x);
+            component.setAttribute("y", y);
+            component.textContent = text;
+        }
+
+        function newNode (number, name, x, y) {
+        	// console.log("In function newNode");
             var g = document.createElement('g');
-            g.innerHTML = "Sup";
-            svgElem.appendChild(g);
+            newTextComponent(g, x +20, y +40, number);
+            newTextComponent(g, x +20, y +60, name);
+            // console.log(g);
+            return g;
+        }
+
+        function buildWBT (svgElem, data) {
+            // Given svg elem, and data call newNode to create the nodes. Then link them up.
+            var n = newNode(1, "Root", 0, 0);
+            // console.log(n);
+            document.getElementById("svg").appendChild(n);
+            return n
         }
     </script>
 </head>
@@ -33,14 +53,13 @@
 
 		<!--<use id=n1 xlink:href="#node"/>-->
 
-        <!--<rect id = "r2" x="1" y="251" width="200" height="100" style="stroke: #009900; stroke-width: 3; fill: none; "/>
-        <text x=20 y =290>Task name</text>
+        <rect id = "r2" x="1" y="251" width="200" height="100" style="stroke: #009900; stroke-width: 3; fill: none; "/>
+        <text id =t1 x=20 y =290>Task name</text>
         <text x=20 y =310>Task number</text>
 
         <line x1=101 y1 = 100 x2 = 101 y2 = 251 style="stroke:#006600;"/>
-		-->
     </svg>
 
 </body>
-			<script>newNode(document.getElementById("svg"));</script>
+			<!-- <script>newNode(document.getElementById("svg"));</script> -->
 </html>
