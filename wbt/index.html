@@ -14,26 +14,33 @@
             return [x, y];
         }
 
-        function newNode (number, name, parent, children) {
-            // body...
+        function newNode (svgElem, number, name, parent, children) {
+        	console.log("In function");
+            var g = document.createElement('g');
+            g.innerHTML = "Sup";
+            svgElem.appendChild(g);
         }
     </script>
 </head>
 <body>
-    <svg width = 500 height = 500 style="background: #ccc">
-        <g id = "node">
+    <svg id = "svg" width = 500 height = 500 style="background: #ccc">
+        <!--<g id = "node">
             <rect id = "r1" x="1" y="1" width="200" height="100" style="stroke: #009900; stroke-width: 3; fill: none; "/>
             <text x=20 y =40>Task name</text>
             <text x=20 y =60>Task number</text>
         </g>
+		-->
 
-        <use id=n1 xlink:href="#node"/>
-        <rect id = "r2" x="1" y="251" width="200" height="100" style="stroke: #009900; stroke-width: 3; fill: none; "/>
+		<!--<use id=n1 xlink:href="#node"/>-->
+
+        <!--<rect id = "r2" x="1" y="251" width="200" height="100" style="stroke: #009900; stroke-width: 3; fill: none; "/>
         <text x=20 y =290>Task name</text>
         <text x=20 y =310>Task number</text>
 
         <line x1=101 y1 = 100 x2 = 101 y2 = 251 style="stroke:#006600;"/>
+		-->
     </svg>
 
 </body>
+			<script>newNode(document.getElementById("svg"));</script>
 </html>
