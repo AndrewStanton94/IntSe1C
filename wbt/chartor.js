@@ -37,21 +37,41 @@ function newTextComponent (parent, x, y, text) {
 }
 
 function newNode (number, name, x, y) {
-    // console.log("In function newNode");
     var g = document.createElementNS(svgNS, 'g');
     newRectComponent(g, x, y);
-    newTextComponent(g, x +20, y +40, number);
-    newTextComponent(g, x +20, y +60, name);
+    newTextComponent(g, x + 20, y + 40, number);
+    newTextComponent(g, x + 20, y + 60, name);
     // console.log(g);
     return g;
 }
 
+function determineNodes(data) {
+    // this element
+    // for atr in childNodes:
+        // recurse returning node ident for produced childNodes
+        // use ident to link to parent
+}
+
 function buildWBT (svgElem, data) {
     // Given svg elem, and data call newNode to create the nodes. Then link them up.
+
     var n = newNode(1, "Root", 0, 0);
     // console.log(n);
     var svg = document.getElementById("svg");
-    console.log(svg);
+    // console.log(svg);
     svg.appendChild(n);
-    return n
+    // return n
+
+
+    // TODO:
+    //  Unpack data for current row
+    //  Call newNode with data
+    //  Link parent to children
+    //  data = {name, [children]}
+    //
+    //  Recursive
+
+    // This node
+    // For c in child nodes:
+    //      recurse; Returning reference to enable nodes to be linked
 }
