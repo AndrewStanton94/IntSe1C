@@ -1,0 +1,40 @@
+<html>
+<head>
+    <title>Dynamic Vector Circle</title>
+    <script type="text/javascript">
+        var svgNS = "http://www.w3.org/2000/svg";  
+
+        function createCircle()
+        {
+            var myCircle = document.createElementNS(svgNS,"circle"); //to create a circle, for rectangle use rectangle
+            myCircle.setAttribute("id","mycircle");
+            myCircle.setAttribute("cx",100);
+            myCircle.setAttribute("cy",100);
+            myCircle.setAttribute("r",50);
+            myCircle.setAttribute("fill","blue");
+            myCircle.setAttribute("stroke","none");
+
+            document.getElementById("mySVG").appendChild(myCircle);
+        }                 
+
+        function createText()
+        {
+            var myText = document.createElementNS(svgNS,"text"); //to create a circle, for rectangle use rectangle
+            myText.setAttribute("id","myText");
+            myText.setAttribute("x",100);
+            myText.setAttribute("y",100);
+            myText.textContent = "This should work";
+            // myText.setAttribute("width",100);
+            // myText.setAttribute("height",100);
+            // myText.setAttribute("fill","blue");
+            // myText.setAttribute("stroke","none");
+
+            document.getElementById("mySVG").appendChild(myText);
+        }                 
+    </script>
+</head>
+<body onload="createCircle(); createText();">
+    <svg id="mySVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    </svg>
+</body>
+</html>
