@@ -1,0 +1,18 @@
+Node attrs
+    Name
+    Task Number
+
+OnAddNode: ask for name
+
+Azdean:
+    Edit interface:
+        GetName event
+        Parent
+    Modify node to get the {t1,t2,t3} associative array
+
+    Andrew
+        Draw from {t1,t2,t3}
+
+    Taylor:
+        Datebase
+        API
