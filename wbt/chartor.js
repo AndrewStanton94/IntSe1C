@@ -47,35 +47,3 @@ function newNode (number, name, x, y) {
     return g;
 }
 
-function determineNodes(svgElem, data, number, x, y) {
-    // Recursive function to oversee node creation
-    var parent, parentConnection,
-    childrenConnections = [],
-    name = data.name,
-    children = data.children,
-
-    recurse = function (element, index, array) {
-        // Inner function to use forEach method to ensure order
-        var num = number + "." + toString(index + 1);
-        childrenConnections.push(determineNodes(svgElem, element, num, x, y));
-    };
-
-    parent = newNode(number, name, x, y);
-    svgElem.appendChild(n);
-    parentConnection = connectionPoint(parent, true);
-    console.log(parentConnection);
-
-    children.forEach(recurse);  // Using forEach method as other form doesn't ensure order.
-
-    return parent;
-}
-
-function buildWBT (data) {
-    // Gets svg element, and data then calls determineNodes to create the nodes and link them up.
-
-    var svgElem, data;
-    svgElem = document.getElementById("svg");
-
-
-    var n = newNode(1, "Root", 0, 0);
-}
