@@ -11,6 +11,9 @@ Azdean:
     Modify node to get the {t1,t2,t3} associative array
 
     Andrew
+        Create L join connectors
+        Get parent to interrogate for position
+        Set default level postion offsets
         Draw from {t1,t2,t3}
 
     Taylor:

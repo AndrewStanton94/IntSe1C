@@ -29,7 +29,6 @@ function newRectComponent (parent, x, y) {
 
 function newTextComponent (parent, x, y, text) {
     // Add a text element to the node. Giving , location and text content
-
     var myText = document.createElementNS(svgNS,"text");
     myText.setAttribute("id","myText");
     myText.setAttribute("x", x);
@@ -47,3 +46,29 @@ function newNode (number, name, x, y) {
     return g;
 }
 
+function determineLevel (number) {
+    var level = 0;
+    for (var key in number){
+        level += number[key] ? 1: 0;
+    }
+    return level;
+}
+
+function nodeNumberStr (number) {
+    var strOut = "";
+    for (var key in number){
+        console.log(number[key]);
+        if (number[key])
+            strOut += (key === 't1' ? "": ".") + number[key];
+        else break; // If null: no more data
+    }
+    return strOut;
+}
+
+function prepareNode (name, number) {
+    var node, numberStr, name, x, y, level = determineLevel(number);
+    // Retrieve parent
+    // Use that plus set level constants to get position
+
+    node = newNode(numberStr, name, x, y);
+}
