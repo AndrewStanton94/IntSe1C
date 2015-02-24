@@ -7,6 +7,10 @@
 4. Enter `git clone https://github.com'/AndrewStanton94/IntSe.git`
 
 
+## Before editing:
+Use `git pull` to ensure you have the latest version of the repo. Failing to do this may lead to issues if the same files are edited by others. Git gets confused and needs a human to sort out the merge conflict. Contact Andrew if there are any issues.
+
+
 ## To upload changes to github:
 1. Navigate into the repo.
 	![alt text](https://github.com/AndrewStanton94/IntSe1C/blob/master/gitGuide/cdTo.png "cdTo")
