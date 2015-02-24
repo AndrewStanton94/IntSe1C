@@ -1,4 +1,6 @@
-var svgNS = "http://www.w3.org/2000/svg";
+var svgNS = "http://www.w3.org/2000/svg",
+    nodeWidth = 150,
+    nodeHeight = 100;
 
 function getAttrAsInt (elem, attr) {
     // (int) elem.attr
@@ -15,13 +17,13 @@ function connectionPoint (node, isParent) {
 }
 
 function newRectComponent (parent, x, y) {
-    console.log("Making rect");
+    console.log("Making rect bg");
     var myRect = document.createElementNS(svgNS,"rect");
     myRect.setAttribute("id","myRectangle");
     myRect.setAttribute("x", x);
     myRect.setAttribute("y", y);
-    myRect.setAttribute("width", 200);
-    myRect.setAttribute("height", 100);
+    myRect.setAttribute("width", nodeWidth);
+    myRect.setAttribute("height", nodeHeight);
     myRect.setAttribute("fill","red");
     myRect.setAttribute("stroke","none");
     parent.appendChild(myRect);
@@ -55,20 +57,65 @@ function determineLevel (number) {
 }
 
 function nodeNumberStr (number) {
+    // Must have associative array
     var strOut = "";
     for (var key in number){
         console.log(number[key]);
-        if (number[key])
-            strOut += (key === 't1' ? "": ".") + number[key];
+        if (number[key]){
+            strOut += (key === 't1' ? "": ".") + number[key].toString();
+            // console.log("is true")
+        }
         else break; // If null: no more data
     }
+    if (strOut == ""){
+        // console.log("unchanged");
+        strOut = "0";
+    }
+    // else{console.log("changed");};
+    // strOut != "" ? strOut : "0"; // Why is this line broken?
     return strOut;
 }
 
+function getSVGdimensions (id) {
+    var svgElem = document.getElementById(id) , width, height;
+    console.log(svgElem);
+    width = svgElem.width.baseVal.value;
+    height = svgElem.height.baseVal.value;
+    // console.log(width);
+    // console.log(height);
+    return {"width": width, "height": height};
+}
+
 function prepareNode (name, number) {
-    var node, numberStr, name, x, y, level = determineLevel(number);
-    // Retrieve parent
+    var node,  name, x, y,
+        level = determineLevel(number),
+        numberStr = nodeNumberStr(number),
+        dimensions = getSVGdimensions("svg");
+    // Retrieve parent OR have it passed
     // Use that plus set level constants to get position
 
-    node = newNode(numberStr, name, x, y);
+
+    switch (level){
+        case 0:
+            x  = (dimensions.width / 2) - (nodeWidth / 2);
+            y  = 10;
+            console.log(dimensions.width, x, y);    // dimensions.width can be 0. Race Condition?
+            break;
+        case 1:
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+    }
+
+    return newNode(numberStr, name, x, y);
 }
+
+function demo () {
+    var s = document.getElementById("svg"),
+        n = prepareNode("Bob", {"t1": null});
+    s.appendChild(n);
+}
+
+// window.addEventListener('load', demo);
