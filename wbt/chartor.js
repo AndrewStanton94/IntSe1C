@@ -1,18 +1,23 @@
 var svgNS = "http://www.w3.org/2000/svg",
     nodeWidth = 150,
-    nodeHeight = 100;
+    nodeHeight = 60;
 
 function getAttrAsInt (elem, attr) {
     // (int) elem.attr
     return parseInt(elem.getAttribute(attr));
 }
 
-function connectionPoint (node, isParent) {
+function connectionPoint (node, isParent, leftConnect) {
     // Given node, get rect and determine were to connect lines to. If parent node, connection at bottom; else top.
-    var x,y, elem;
-    elem = node.children[0];    // Need to use rectangle as g has no dimension attrs to read.
-    x = getAttrAsInt(elem, "x") + (getAttrAsInt(elem, "width")/2)
-    y = getAttrAsInt(elem, "y") + isParent ? getAttrAsInt(elem, "height") : 0;
+    var x,y, elem = node.children[0];    // Need to use rectangle as g has no dimension attrs to read.
+	if (leftConnect){
+		x = getAttrAsInt(elem, "x");
+		y = getAttrAsInt(elem, "y") + (getAttrAsInt(elem, "height")/2);
+	}
+	else{
+		x = getAttrAsInt(elem, "x") + (getAttrAsInt(elem, "width")/2);
+		y = getAttrAsInt(elem, "y") + isParent ? getAttrAsInt(elem, "height") : 0;
+	}
     return [x, y];
 }
 
@@ -42,8 +47,8 @@ function newTextComponent (parent, x, y, text) {
 function newNode (number, name, x, y) {
     var g = document.createElementNS(svgNS, 'g');
     newRectComponent(g, x, y);
-    newTextComponent(g, x + 20, y + 40, number);
-    newTextComponent(g, x + 20, y + 60, name);
+    newTextComponent(g, x + 20, y + 20, number);
+    newTextComponent(g, x + 20, y + 40, name);
     // console.log(g);
     return g;
 }
@@ -77,6 +82,7 @@ function nodeNumberStr (number) {
 }
 
 function getSVGdimensions (id) {
+	// Dimensions of svg elem
     var svgElem = document.getElementById(id) , width, height;
     console.log(svgElem);
     width = svgElem.width.baseVal.value;
