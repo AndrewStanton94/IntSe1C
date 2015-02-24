@@ -4,10 +4,9 @@
 <section id="content">
 	
 <aside id="inputArea">
-	<div id="inputTitle"><h1>Add nodes here!</h1><img id="addNode" src="assets/img/add.svg"></img></div>
+	<div id="inputTitle"><form id="nameInput"><input type="text" id="nodeName" placeholder="Add a task." /></form><img id="addNode" src="assets/img/add.svg"></img></div>
 		
 		
-			<!--<button type="submit">Submit</button>-->
 </aside>
 
 </section>

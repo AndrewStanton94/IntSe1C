@@ -1,3 +1,18 @@
+#nodeName
+	height: 1em
+	padding: 0.5em 0.5em 0.5em 0.5em
+	width: 15em
+	margin: 0.5em 0 0 0.5em
+	border: 1px solid #999
+	border-radius: 5px
+	float: left
+
+#inputTitle
+	display: inline-block
+	height: 3em
+	width: 100%
+	background-color: $darkHighlight
+
 .input input
 	height: 1em
 	padding: 0.5em 0.5em 0.5em 0.5em
@@ -6,6 +21,11 @@
 	border: 1px solid #999
 	border-radius: 5px
 
+.node select
+	height: 2em
+	width: 15em
+	margin: 0 0 0 1em
+	
 .input input:focus
 	border-color: $primary
 
@@ -18,41 +38,15 @@
 	font-weight: 300
 	margin: 0 0 0 1em
 
-#inputTitle h1
-	font-family: $fontB
-	font-weight: 300
-	font-size: 120%
-	padding: 0.5em 0 0 0.5em
-	display: inline
-	width: 8em
-
-form button
-	height: 2em
-	width: 14em
-	border-radius: 5px
-	border: 1px solid #999
-	color: $background
-	background-color: $primary
-	margin: 1em 0 0 4.5em
-
-form button:hover
-	background-color: $darkHighlight
-
 #addNode
-	height: 1.5em
-	width: 1.5em
+	height: 2em
+	width: 2em
 	float: right
-	margin: 0.2em 1em 0 0
-	background-color: $primary
-	border-radius: 24px
+	padding: 0.5em
+	background-color: $darkHighlight
 
 #addNode:hover
-	background-color: $darkHighlight
-
-#inputTitle
-	height: 2em
-	width: 100%
-	margin: 0 0 1em 0
+	background-color: $primary
 
 .input
 	height: 2em
@@ -60,15 +54,16 @@ form button:hover
 	padding: 0.5em 0 0.5em 0
 
 #inputArea
-	width: 25%
+	width: 22em
 	min-height: 40em 
-	border-right: 1px solid $primary
 
 .node
 	height: 3em
+	margin: 0
 	overflow: hidden
 	-webkit-transition: height 0.5s /* For Safari 3.1 to 6.0 */
 	transition: height 0.5s
+	border-bottom: 1px dotted $primary 
 
 .nodeTitle:hover
 	background-color: $primary
@@ -85,3 +80,4 @@ form button:hover
 	float: right
 	margin: 0 1em 0 0
 	font-size: 90%
+	cursor: pointer
