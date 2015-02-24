@@ -1,0 +1,3 @@
+Redraw canvas on page resize? Timer to delay
+
+Done: get connection point: top, bottom, left
