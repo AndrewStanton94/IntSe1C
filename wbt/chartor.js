@@ -1,5 +1,5 @@
-"use strict";
-var svgNS = "http://www.w3.org/2000/svg",
+'use strict';
+var svgNS = 'http://www.w3.org/2000/svg',
     nodeWidth = 150,
     nodeHeight = 60;
 
@@ -12,35 +12,35 @@ function connectionPoint (node, isParent, leftConnect) {
     // Given node, get rect and determine were to connect lines to. If parent node, connection at bottom; else top.
     var x,y, elem = node.children[0];    // Need to use rectangle as g has no dimension attrs to read.
 	if (leftConnect){
-		x = getAttrAsInt(elem, "x");
-		y = getAttrAsInt(elem, "y") + (getAttrAsInt(elem, "height")/2);
+		x = getAttrAsInt(elem, 'x');
+		y = getAttrAsInt(elem, 'y') + (getAttrAsInt(elem, 'height')/2);
 	}
 	else{
-		x = getAttrAsInt(elem, "x") + (getAttrAsInt(elem, "width")/2);
-		y = getAttrAsInt(elem, "y") + isParent ? getAttrAsInt(elem, "height") : 0;
+		x = getAttrAsInt(elem, 'x') + (getAttrAsInt(elem, 'width')/2);
+		y = getAttrAsInt(elem, 'y') + isParent ? getAttrAsInt(elem, 'height') : 0;
 	}
     return [x, y];
 }
 
 function newRectComponent (parent, x, y) {
-    console.log("Making rect bg");
-    var myRect = document.createElementNS(svgNS,"rect");
-    myRect.setAttribute("id","myRectangle");
-    myRect.setAttribute("x", x);
-    myRect.setAttribute("y", y);
-    myRect.setAttribute("width", nodeWidth);
-    myRect.setAttribute("height", nodeHeight);
-    myRect.setAttribute("fill","red");
-    myRect.setAttribute("stroke","none");
+    console.log('Making rect bg');
+    var myRect = document.createElementNS(svgNS,'rect');
+    myRect.setAttribute('id','myRectangle');
+    myRect.setAttribute('x', x);
+    myRect.setAttribute('y', y);
+    myRect.setAttribute('width', nodeWidth);
+    myRect.setAttribute('height', nodeHeight);
+    myRect.setAttribute('fill','red');
+    myRect.setAttribute('stroke','none');
     parent.appendChild(myRect);
 }
 
 function newTextComponent (parent, x, y, text) {
     // Add a text element to the node. Giving , location and text content
-    var myText = document.createElementNS(svgNS,"text");
-    myText.setAttribute("id","myText");
-    myText.setAttribute("x", x);
-    myText.setAttribute("y", y);
+    var myText = document.createElementNS(svgNS,'text');
+    myText.setAttribute('id','myText');
+    myText.setAttribute('x', x);
+    myText.setAttribute('y', y);
     myText.textContent = text; 
     parent.appendChild(myText);
 }
@@ -64,21 +64,21 @@ function determineLevel (number) {
 
 function nodeNumberStr (number) {
     // Must have associative array
-    var strOut = "";
+    var strOut = '';
     for (var key in number){
         console.log(number[key]);
         if (number[key]){
-            strOut += (key === 't1' ? "": ".") + number[key].toString();
-            // console.log("is true")
+            strOut += (key === 't1' ? '': '.') + number[key].toString();
+            // console.log('is true')
         }
         else break; // If null: no more data
     }
-    if (strOut == ""){
-        // console.log("unchanged");
-        strOut = "0";
+    if (strOut == ''){
+        // console.log('unchanged');
+        strOut = '0';
     }
-    // else{console.log("changed");};
-    // strOut != "" ? strOut : "0"; // Why is this line broken?
+    // else{console.log('changed');};
+    // strOut != '' ? strOut : '0'; // Why is this line broken?
     return strOut;
 }
 
@@ -90,14 +90,14 @@ function getSVGdimensions (id) {
     height = svgElem.height.baseVal.value;
     // console.log(width);
     // console.log(height);
-    return {"width": width, "height": height};
+    return {'width': width, 'height': height};
 }
 
 function prepareNode (name, number) {
     var node,  name, x, y,
         level = determineLevel(number),
         numberStr = nodeNumberStr(number),
-        dimensions = getSVGdimensions("svg");
+        dimensions = getSVGdimensions('svg');
     // Retrieve parent OR have it passed
     // Use that plus set level constants to get position
 
@@ -120,8 +120,8 @@ function prepareNode (name, number) {
 }
 
 function demo () {
-    var s = document.getElementById("svg"),
-        n = prepareNode("Bob", {"t1": null});
+    var s = document.getElementById('svg'),
+        n = prepareNode('Bob', {'t1': null});
     s.appendChild(n);
 }
 
