@@ -1,3 +1,4 @@
+"use strict";
 var svgNS = "http://www.w3.org/2000/svg",
     nodeWidth = 150,
     nodeHeight = 60;
