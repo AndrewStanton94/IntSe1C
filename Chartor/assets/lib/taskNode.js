@@ -31,7 +31,7 @@ function Node(name){
 	// Fill options for the select menus of the nodes
 	this.buildOptions = function buildOptions(){
 		var option = '<option></option><option>ROOT</option>',
-			i, // = this.key + 'parent',	// This value is overwritten, not used??
+			i = this.key + 'parent',
 			optionsWrite = document.getElementById(i);
 
 		for (i = 0; i < nodeObjects.length; i++){
