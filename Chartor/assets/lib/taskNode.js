@@ -30,7 +30,7 @@ function Node(name){
 
 	// Fill options for the select menus of the nodes
 	this.buildOptions = function buildOptions(){
-		var option = '',
+		var option = '<option></option><option>ROOT</option>',
 			i, // = this.key + 'parent',	// This value is overwritten, not used??
 			optionsWrite = document.getElementById(i);
 
@@ -87,13 +87,12 @@ function Node(name){
 	};
 }
 
-var keyGen = new id();
+var keyGen = new id(),
+	addNode = document.getElementById('addNode'),
+	nameInput = document.getElementById('nodeName'),
 
-var addNode = document.getElementById('addNode');
-var nameInput = document.getElementById('nodeName');
-
-var nodeObjects = [];
-var node;
+	nodeObjects = [],
+	node;
 
 // Add new node elem to list using click
 addNode.addEventListener('click', function(){
