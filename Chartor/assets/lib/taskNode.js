@@ -1,3 +1,4 @@
+// Int Id for sidebar stuff
 function id(){
 	this.key = document.getElementsByClassName('node').length;
 
@@ -12,6 +13,7 @@ function id(){
 	};
 };
 
+// Node class
 function Node(name){
 	this.name = name;
 	this.key = keyGen.generate();
@@ -20,10 +22,12 @@ function Node(name){
 	this.nodeTitleArray =  document.getElementsByClassName('nodeTitle');
 	this.parent;
 
+	// Mutator for parent attr
 	this.editParent = function editParent(parent){
 		this.parent = parent;
 	}
 
+	// Fill options for the select menus of the nodes
 	this.buildOptions = function buildOptions(){
 		var option = '',
 			i = this.key + 'parent';
@@ -38,6 +42,7 @@ function Node(name){
 		optionsWrite.insertAdjacentHTML('beforeend', option);
 	}
 
+	// Draw form representation of the node
 	this.addNode = function addNode(){
 		this.target.insertAdjacentHTML('beforeend', '<section class="node" id="' + this.key +'"><div class="nodeTitle"><h1>'+ this.name +'</h1><p id="' + this.key +'del">Delete</p></div><div class="input"><label for="parent">Parent</label><select name="parent" id="' + this.key +'parent"></select></div></section>');
 	};
