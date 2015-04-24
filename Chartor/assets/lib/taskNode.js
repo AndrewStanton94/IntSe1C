@@ -1,4 +1,7 @@
 'use strict';
+
+var rootNode;
+
 // Int Id for sidebar stuff
 function id(){
 	this.key = document.getElementsByClassName('node').length;
