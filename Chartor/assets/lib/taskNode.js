@@ -1,3 +1,4 @@
+'use strict';
 // Int Id for sidebar stuff
 function id(){
 	this.key = document.getElementsByClassName('node').length;
@@ -11,7 +12,7 @@ function id(){
 		}
 		return this.key;
 	};
-};
+}
 
 // Node class
 function Node(name){
@@ -20,33 +21,34 @@ function Node(name){
 	this.target = document.getElementById('inputArea');
 	this.nodeArray = document.getElementsByClassName('node');
 	this.nodeTitleArray =  document.getElementsByClassName('nodeTitle');
-	this.parent;
+	// this.parent;
 
 	// Mutator for parent attr
 	this.editParent = function editParent(parent){
 		this.parent = parent;
-	}
+	};
 
 	// Fill options for the select menus of the nodes
 	this.buildOptions = function buildOptions(){
 		var option = '',
-			i = this.key + 'parent';
+			i, // = this.key + 'parent',	// This value is overwritten, not used??
 			optionsWrite = document.getElementById(i);
 
-		for (i = 0; i < nodeObjects.length; i++) { 
+		for (i = 0; i < nodeObjects.length; i++){
 			if(nodeObjects[i].key != this.key){
 	    		option += '<option>' + nodeObjects[i].name + '</option>';
-				}
 			}
-			optionsWrite.innerHTML = '';
+		}
+		optionsWrite.innerHTML = '';
 		optionsWrite.insertAdjacentHTML('beforeend', option);
-	}
+	};
 
 	// Draw form representation of the node
 	this.addNode = function addNode(){
 		this.target.insertAdjacentHTML('beforeend', '<section class="node" id="' + this.key +'"><div class="nodeTitle"><h1>'+ this.name +'</h1><p id="' + this.key +'del">Delete</p></div><div class="input"><label for="parent">Parent</label><select name="parent" id="' + this.key +'parent"></select></div></section>');
 	};
 
+	// Delete node
 	this.addDeleteListener = function addDeleteListener(){
 		var o = this.key + 'del',
 			key = this.key,
@@ -66,10 +68,10 @@ function Node(name){
 		});
 	};
 
+	// Show / hide parent selection menu
 	this.addListener = function addListener(node, nodeTitle){
 		nodeTitle.addEventListener('click', function(){
-
-			if(node.style.height == '6.5em' || node.style.height == null){
+			if(node.style.height == '6.5em' || node.style.height === null){
 				node.style.height = '3em';
 			}
 			else{
@@ -82,8 +84,8 @@ function Node(name){
 		this.addNode();
 		this.addDeleteListener();
 		this.addListener(this.nodeArray[this.nodeArray.length - 1], this.nodeTitleArray[this.nodeTitleArray.length - 1]);
-	}
-};
+	};
+}
 
 var keyGen = new id();
 
@@ -93,11 +95,12 @@ var nameInput = document.getElementById('nodeName');
 var nodeObjects = [];
 var node;
 
+// Add new node elem to list using click
 addNode.addEventListener('click', function(){
-	if(nodeName.value != ''){
+	if(nodeName.value !== ''){
 		node = new Node(nameInput.value);
 		nodeObjects.push(node);
-		node.constructor();	
+		node.constructor();
 		nodeName.style.color = 'black';
 		nameInput.value = '';
 	}
@@ -106,14 +109,15 @@ addNode.addEventListener('click', function(){
 	}
 });
 
+// Add new node elem to list using enter key press
 document.getElementById('nameInput').addEventListener('submit',
 	function(e){
 		e.preventDefault();
-		if(nodeName.value != ''){
+		if(nodeName.value !== ''){
 			node = new Node(nameInput.value);
 			nodeObjects.push(node);
 			node.constructor();
-			for (i = 0; i < nodeObjects.length; i++){ 
+			for (var i = 0; i < nodeObjects.length; i++){ 
 				nodeObjects[i].buildOptions();
 			}
 			nodeName.style.color = 'black';
