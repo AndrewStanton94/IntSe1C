@@ -22,6 +22,28 @@ function Node(name){
 	this.nodeArray = document.getElementsByClassName('node');
 	this.nodeTitleArray =  document.getElementsByClassName('nodeTitle');
 	// this.parent;
+	this.children = [];
+
+	this.appendChild = function(valueToAdd){
+		this.children.push(valueToAdd);
+	};
+
+	this.hasChildren = function(){
+		return this.children.length > 0;
+	};
+
+	this.removeChildById = function(id){
+		for (var i = 0; i < this.children.length; i++){
+			if(this.children[i].key === id){	// Found it 
+				if (this.children[i].hasChildren()){	// Item to delete has children
+					if (!prompt('The node you are deleting has children. Continue?')){
+						return;	// Don't delete
+					}
+				}
+				this.children.splice(i, 1);	// Delete
+			}
+		}
+	};
 
 	// Mutator for parent attr
 	this.editParent = function editParent(parent){
