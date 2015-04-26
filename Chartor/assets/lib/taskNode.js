@@ -65,11 +65,10 @@ function Node(name){
 
 		for (i = 0; i < nodeObjects.length; i++){
 			if(nodeObjects[i].key != this.key){
-				var option = document.createElement('option');
+				option = document.createElement('option');
 				option.textContent = nodeObjects[i].name;
 				option.dataset.id = i;
 				optionsWrite.appendChild(option);
-	    		// option += '<option>' + nodeObjects[i].name + '</option>';
 			}
 		}
 	};
@@ -119,8 +118,13 @@ function Node(name){
 			console.log(parentSelection);
 
 		parentSelection.addEventListener('change', function(e){
-			console.log(e.target.dataset.id);
-			alert('This is eventful');
+			var currentOption = e.target.options[e.target.selectedIndex];
+			console.log(currentOption.textContent);
+			console.log(currentOption.dataset.id);
+			if (currentOption.textContent === 'ROOT'){
+				console.log('I am ROOT');
+				rootNode = e.target.id;
+			}
 		});
 	};
 	
