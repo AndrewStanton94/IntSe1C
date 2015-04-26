@@ -3,4 +3,5 @@
 </footer>
 </body>
 <script src="assets/lib/taskNode.js"></script>
+<script src="../wbt/chartor.js"></script>
 </html>
