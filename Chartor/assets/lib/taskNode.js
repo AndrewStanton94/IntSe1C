@@ -55,17 +55,23 @@ function Node(name){
 
 	// Fill options for the select menus of the nodes
 	this.buildOptions = function buildOptions(){
+		console.log('In build options');
 		var option = '<option></option><option>ROOT</option>',
 			i = this.key + 'parent',
 			optionsWrite = document.getElementById(i);
 
-		for (i = 0; i < nodeObjects.length; i++){
-			if(nodeObjects[i].key != this.key){
-	    		option += '<option>' + nodeObjects[i].name + '</option>';
-			}
-		}
 		optionsWrite.innerHTML = '';
 		optionsWrite.insertAdjacentHTML('beforeend', option);
+
+		for (i = 0; i < nodeObjects.length; i++){
+			if(nodeObjects[i].key != this.key){
+				var option = document.createElement('option');
+				option.textContent = nodeObjects[i].name;
+				option.dataset.id = i;
+				optionsWrite.appendChild(option);
+	    		// option += '<option>' + nodeObjects[i].name + '</option>';
+			}
+		}
 	};
 
 	// Draw form representation of the node
@@ -104,11 +110,26 @@ function Node(name){
 			}
 		});
 	};
+
+	this.addSelectListener = function(){
+		console.log('in addSelectListener');
+		var targetId = this.key + 'parent',
+			key = this.key,
+			parentSelection = document.getElementById(targetId);
+			console.log(parentSelection);
+
+		parentSelection.addEventListener('change', function(e){
+			console.log(e.target.dataset.id);
+			alert('This is eventful');
+		});
+	};
 	
 	this.constructor = function contructor(){
-		this.addNode();
+		console.log('in constructor');
+		this.addNode();				// Add node to sidebar
 		this.addDeleteListener();
-		this.addListener(this.nodeArray[this.nodeArray.length - 1], this.nodeTitleArray[this.nodeTitleArray.length - 1]);
+		this.addSelectListener();
+		this.addListener(this.nodeArray[this.nodeArray.length - 1], this.nodeTitleArray[this.nodeTitleArray.length - 1]);	// Toggle option visibility
 	};
 }
 
@@ -125,6 +146,9 @@ addNode.addEventListener('click', function(){
 		node = new Node(nameInput.value);
 		nodeObjects.push(node);
 		node.constructor();
+		for (var i = 0; i < nodeObjects.length; i++){ 
+			nodeObjects[i].buildOptions();
+		}
 		nodeName.style.color = 'black';
 		nameInput.value = '';
 	}
