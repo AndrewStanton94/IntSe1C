@@ -5,10 +5,11 @@ var rootNode;
 // Int Id for sidebar stuff
 function id(){
 	this.key = document.getElementsByClassName('node').length;
+	this.key = this.key === 0 ? null : this.key;
 
 	this.generate = function generate(){
-		if(this.key == 0){
-			this.key = 1;
+		if(this.key === null){
+			this.key = 0;		// 0 index for compatibility with loops
 		}
 		else{
 			this.key++;
@@ -56,9 +57,10 @@ function Node(name){
 	// Fill options for the select menus of the nodes
 	this.buildOptions = function buildOptions(){
 		console.log('In build options');
-		var option = '<option></option><option>ROOT</option>',
+		var option = '<option></option><option data-id="ROOT">ROOT</option>',
 			i = this.key + 'parent',
-			optionsWrite = document.getElementById(i);
+			optionsWrite = document.getElementById(i),
+			previouslySelected = optionsWrite.selectedIndex;	// Prevent redraw dropping data
 
 		optionsWrite.innerHTML = '';
 		optionsWrite.insertAdjacentHTML('beforeend', option);
@@ -71,6 +73,7 @@ function Node(name){
 				optionsWrite.appendChild(option);
 			}
 		}
+		optionsWrite.selectedIndex = previouslySelected;	// Only takes numeric data ((int))
 	};
 
 	// Draw form representation of the node
@@ -111,25 +114,34 @@ function Node(name){
 	};
 
 	this.addSelectListener = function(){
-		console.log('in addSelectListener');
+		// console.log('in addSelectListener');
 		var targetId = this.key + 'parent',
-			key = this.key,
-			parentSelection = document.getElementById(targetId);
-			console.log(parentSelection);
+			parentSelectElem = document.getElementById(targetId);
 
-		parentSelection.addEventListener('change', function(e){
-			var currentOption = e.target.options[e.target.selectedIndex];
-			console.log(currentOption.textContent);
-			console.log(currentOption.dataset.id);
-			if (currentOption.textContent === 'ROOT'){
-				console.log('I am ROOT');
-				rootNode = e.target.id;
+		parentSelectElem.addEventListener('change', function(e){
+			var selectedParentOptionElem = e.target.options[e.target.selectedIndex],
+				selectedNode = parseInt(e.target.id.replace('parent', ''));
+
+			console.log('selectedParentOptionElem');
+			console.log(selectedParentOptionElem);
+
+			if (selectedParentOptionElem.dataset.id === 'ROOT'){
+				console.log(selectedNode + ' is root');
+				rootNode = selectedNode;
+				return;
+			}
+			if (selectedParentOptionElem.dataset.id){
+				console.log('Valid non root node selected');
+				var parentId = selectedParentOptionElem.dataset.id;
+				nodeObjects[parentId].appendChild(selectedNode);
+				console.log(parentId + ' isParentOf ' + selectedNode);
+				console.log(nodeObjects[parentId].children);
 			}
 		});
 	};
 	
 	this.constructor = function contructor(){
-		console.log('in constructor');
+		// console.log('in constructor');
 		this.addNode();				// Add node to sidebar
 		this.addDeleteListener();
 		this.addSelectListener();
