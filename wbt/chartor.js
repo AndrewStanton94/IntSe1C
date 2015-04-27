@@ -60,8 +60,8 @@ function lConnector(svgElem, node1, node2){
         connection2 = connectionPoint(node2, 'Left'),
         joint = {'x': connection1.x, 'y': connection2.y};
 
-    drawLine(svgElem, connection1);
-    drawLine(svgElem, connection2);
+    drawLine(svgElem, connection1, joint);
+    drawLine(svgElem, joint, connection2);
 }
 
 function newRectComponent (parent, x, y){
@@ -119,14 +119,14 @@ function nodeNumberStr (number){
         // console.log('unchanged');
         strOut = '0';
     }
-    console.log(strOut);
+    // console.log(strOut);
     return strOut;
 }
 
 function getSVGdimensions(id){
     // Dimensions of svg elem
     var svgElem = document.getElementById(id) , width, height;
-    console.log(svgElem);
+    // console.log(svgElem);
     width = svgElem.width.baseVal.value;
     height = svgElem.height.baseVal.value;
     // console.log(width);

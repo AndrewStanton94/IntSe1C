@@ -137,7 +137,7 @@ function Node(name){
 				nodeObjects[parentId].appendChild(selectedNode);	// Add this to parents Children
 				nodeObjects[selectedNode].editParent(parseInt(parentId));	// Add parent to this
 				console.log(parentId + ' isParentOf ' + selectedNode);
-				console.log(nodeObjects[parentId].children);
+				// console.log(nodeObjects[parentId].children);
 			}
 			document.dispatchEvent(new CustomEvent('redrawTree'));
 		});
@@ -212,11 +212,11 @@ function drawTree(treeRoot, currentNumberArray){
 			tempArray = currentNumberArray.slice(0);	// Else shallow copy
 		tempArray.push(parseInt(childIndex) + 1);
 		childNode = drawTree(nodeObjects[children[childIndex]], tempArray);
-		console.log(tempArray.length);
-		if (tempArray.length === 1){
+		console.log(currentNumberArray.length);
+		if (currentNumberArray.length === 0){
 			straightConnector(svgElement, node, childNode);
 		}
-		else if (tempArray.length > 1){
+		else if (currentNumberArray.length >= 1){
 			lConnector(svgElement, node, childNode);
 		}
 	}
