@@ -135,7 +135,7 @@ function Node(name){
 				// console.log('Valid non root node selected');
 
 				nodeObjects[parentId].appendChild(selectedNode);	// Add this to parents Children
-				this.editParent(parentId);
+				nodeObjects[selectedNode].editParent(parseInt(parentId));	// Add parent to this
 				console.log(parentId + ' isParentOf ' + selectedNode);
 				console.log(nodeObjects[parentId].children);
 			}
