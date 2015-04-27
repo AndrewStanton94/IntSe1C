@@ -99,7 +99,10 @@ footer {
 
 #inputArea {
   width: 22em;
-  min-height: 40em; }
+  min-height: 40em;
+  display: inline-block;
+  vertical-align: top;
+}
 
 .node {
   height: 3em;
@@ -125,3 +128,9 @@ footer {
   margin: 0 1em 0 0;
   font-size: 90%;
   cursor: pointer; }
+
+svg{
+  display: inline-block;
+  vertical-align: top;
+  min-width: 500px;
+}
