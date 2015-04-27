@@ -92,9 +92,9 @@ function determineLevel(number){
 
 function nodeNumberStr (number){
     var strOut = '';
-    console.log('number components');
+    // console.log('number components');
     for(var key in number){
-        console.log(number[key]);
+        // console.log(number[key]);
         if(!number[key]){
             break;
         }
@@ -140,15 +140,9 @@ function prepareNode (name, numberArray){
         case 1:
             y = 100;
 
-            // if(nodeObjects[rootNode].children.length){
-                n = nodeObjects[rootNode].children.length;
-                x = (dimensions.width / n) * innerIndex;
-            // }
-            // else{
-            //     console.log('Default location for level 1');
-            //     x = 50;
-            // }
-            console.log(dimensions.width, n, innerIndex);
+            n = nodeObjects[rootNode].children.length;
+            x = (dimensions.width / n) * innerIndex;
+            // console.log(dimensions.width, n, innerIndex);
             break;
 
         case 2:

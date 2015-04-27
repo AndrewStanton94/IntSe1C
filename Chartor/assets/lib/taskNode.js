@@ -1,6 +1,6 @@
 'use strict';
 
-var rootNode;
+var rootNode, svgElement;
 
 // Int Id for sidebar stuff
 function id(){
@@ -56,7 +56,7 @@ function Node(name){
 
 	// Fill options for the select menus of the nodes
 	this.buildOptions = function buildOptions(){
-		console.log('In build options');
+		// console.log('In build options');
 		var option = '<option></option><option data-id="ROOT">ROOT</option>',
 			i = this.key + 'parent',
 			optionsWrite = document.getElementById(i),
@@ -122,7 +122,7 @@ function Node(name){
 			var selectedParentOptionElem = e.target.options[e.target.selectedIndex],
 				selectedNode = parseInt(e.target.id.replace('parent', ''));
 
-			console.log('selectedParentOptionElem');
+			// console.log('selectedParentOptionElem');
 			console.log(selectedParentOptionElem);
 
 			if (selectedParentOptionElem.dataset.id === 'ROOT'){
@@ -202,17 +202,22 @@ function drawTree(treeRoot, currentNumberArray){
 		// console.log(children);
 		console.log(currentNumberArray);
 
-	document.getElementById('svgElement').appendChild(node);
+	svgElement.appendChild(node);
 	
 	for(var childIndex in children){
 		// Children contains Id of child nodes, look up node instance from nodeObjects
-		var tempArray = currentNumberArray;
+		var tempArray = currentNumberArray.slice(0);	// Else shallow copy
+		console.log('tempArray');
+		console.log(tempArray);
 		tempArray.push(parseInt(childIndex) + 1);
+		console.log(tempArray);
 		drawTree(nodeObjects[children[childIndex]], tempArray);
 	}
 }
 
 document.addEventListener('redrawTree', function(e) {
-	console.log('Drawing');
+	svgElement = document.getElementById('svgElement');
+	svgElement.innerHTML = '';
+	// console.log('Drawing');
 	drawTree(nodeObjects[rootNode], []);
 });
