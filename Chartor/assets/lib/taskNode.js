@@ -208,13 +208,19 @@ function drawTree(treeRoot, currentNumberArray){
 	
 	for(var childIndex in children){
 		// Children contains Id of child nodes, look up node instance from nodeObjects
-		var tempArray = currentNumberArray.slice(0);	// Else shallow copy
-		console.log('tempArray');
-		console.log(tempArray);
+		var childNode,
+			tempArray = currentNumberArray.slice(0);	// Else shallow copy
 		tempArray.push(parseInt(childIndex) + 1);
-		console.log(tempArray);
-		drawTree(nodeObjects[children[childIndex]], tempArray);
+		childNode = drawTree(nodeObjects[children[childIndex]], tempArray);
+		console.log(tempArray.length);
+		if (tempArray.length === 1){
+			straightConnector(svgElement, node, childNode);
+		}
+		else if (tempArray.length > 1){
+			lConnector(svgElement, node, childNode);
+		}
 	}
+	return node;
 }
 
 document.addEventListener('redrawTree', function(e) {

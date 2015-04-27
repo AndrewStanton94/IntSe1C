@@ -1,5 +1,5 @@
 'use strict';
-var svgElement,
+var svgElement, test,
     svgNS = 'http://www.w3.org/2000/svg',       // URL containing definition of SVG elems
     nodeWidth = 150,                            // Global dimension constants
     nodeHeight = 60;
@@ -9,7 +9,7 @@ function getAttrAsInt (elem, attr){
     return parseInt(elem.getAttribute(attr));
 }
 
-function connectionPoint (node, side){
+function connectionPoint(node, side){
     // Given node, get rect and determine where to connect lines to.
     // Options: Top, Bottom, Left
     var elem = node.children[0],    // Need to use rectangle as g has no dimension attrs to read.
@@ -31,7 +31,37 @@ function connectionPoint (node, side){
             default: console.log('Invalid side given for connectionPoint');
         }
 
-    return [x, y];
+    return {'x': x, 'y': y};
+}
+
+function drawLine(svgElem, connection1, connection2){
+    var myLine = document.createElementNS(svgNS,'line');
+
+    myLine.setAttribute('id','myLine');
+    myLine.setAttribute('x1', connection1.x);
+    myLine.setAttribute('y1', connection1.y);
+    myLine.setAttribute('x2', connection2.x);
+    myLine.setAttribute('y2', connection2.y);
+    myLine.setAttribute('style', 'stroke:#000; stroke-width:2');
+    svgElem.appendChild(myLine);
+}
+
+function straightConnector(svgElem, node1, node2){
+    console.log(node1);
+    test = node1;
+    var connection1 = connectionPoint(node1, 'Bottom'),
+        connection2 = connectionPoint(node2, 'Top');
+
+    drawLine(svgElem, connection1, connection2);
+}
+
+function lConnector(svgElem, node1, node2){
+    var connection1 = connectionPoint(node1, 'Bottom'),
+        connection2 = connectionPoint(node2, 'Left'),
+        joint = {'x': connection1.x, 'y': connection2.y};
+
+    drawLine(svgElem, connection1);
+    drawLine(svgElem, connection2);
 }
 
 function newRectComponent (parent, x, y){
@@ -66,21 +96,6 @@ function newNode (number, name, x, y){
     return g;
 }
 
-function straightConnector(svgElem, node1, node2){
-    var myLine = document.createElementNS(svgNS,'line');
-    myLine.setAttribute('id','myLine');
-    myLine.setAttribute('x1', node1[0]);
-    myLine.setAttribute('y1', node1[1]);
-    myLine.setAttribute('x2', node2[0]);
-    myLine.setAttribute('y2', node2[1]);
-    myLine.setAttribute('style', 'stroke:#000; stroke-width:2');
-    svgElem.appendChild(myLine);
-}
-
-function lConnector(svgElem, node1, node2){
-    straightConnector(svgElem, node1, [node1[0], node2[1]]);
-    straightConnector(svgElem, [node1[0], node2[1]], node2);
-}
 
 function determineLevel(number){
     var level = 0;
