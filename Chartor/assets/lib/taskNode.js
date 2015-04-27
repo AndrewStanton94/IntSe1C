@@ -192,3 +192,20 @@ document.getElementById('nameInput').addEventListener('submit',
 		}
 	}
 );
+
+function drawTree(treeRoot, currentNumberArray){
+	var node = prepareNode(treeRoot.name, currentNumberArray),
+		children = treeRoot.children;
+
+	document.getElementById('svgElement').appendChild(node);
+	
+	for(var childIndex in children){
+		var tempArray = currentNumberArray;
+		tempArray.push(childIndex);
+		drawTree(children[childIndex], tempArray);
+	}
+}
+
+document.addEventListener('redrawTree', function(e) {
+	drawTree(nodeObjects[rootNode], []);
+});

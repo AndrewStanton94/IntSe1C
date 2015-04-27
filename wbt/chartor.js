@@ -1,5 +1,6 @@
 'use strict';
-var svgNS = 'http://www.w3.org/2000/svg',       // URL containing definition of SVG elems
+var svgElement,
+    svgNS = 'http://www.w3.org/2000/svg',       // URL containing definition of SVG elems
     nodeWidth = 150,                            // Global dimension constants
     nodeHeight = 60;
 
@@ -90,26 +91,24 @@ function determineLevel(number){
 }
 
 function nodeNumberStr (number){
-    // Must have associative array
     var strOut = '';
-    for (var key in number){
-        // console.log(number[key]);
-        if (number[key]){
-            strOut += (key === 't1' ? '': '.') + number[key].toString();
-            // console.log('is true')
+    console.log('number components');
+    for(var key in number){
+        console.log(number[key]);
+        if(!number[key]){
+            break;
         }
-        else break; // If null: no more data
+        strOut += (key == 0 ? '': '.') + number[key].toString();
     }
     if (strOut === ''){
         // console.log('unchanged');
         strOut = '0';
     }
-    // else{console.log('changed');};
-    // strOut != '' ? strOut : '0'; // Why is this line broken?
+    console.log(strOut);
     return strOut;
 }
 
-function getSVGdimensions (id){
+function getSVGdimensions(id){
     // Dimensions of svg elem
     var svgElem = document.getElementById(id) , width, height;
     console.log(svgElem);
@@ -121,12 +120,15 @@ function getSVGdimensions (id){
 }
 
 function prepareNode (name, numberArray){
-    var x, y,
+    var x, y, n, innerIndex,
         level = determineLevel(numberArray),
         numberStr = nodeNumberStr(numberArray),
         dimensions = getSVGdimensions('svgElement');
     // Retrieve parent OR have it passed
     // Use that plus set level constants to get position
+        if(numberArray){
+            innerIndex = numberArray[numberArray.length-1];
+        }
 
 
     switch (level){
@@ -136,26 +138,38 @@ function prepareNode (name, numberArray){
             console.log(dimensions.width, x, y);    // dimensions.width can be 0. Race Condition?
             break;
         case 1:
+            y = 100;
+
+            // if(nodeObjects[rootNode].children.length){
+                n = nodeObjects[rootNode].children.length;
+                x = (dimensions.width / n) * innerIndex;
+            // }
+            // else{
+            //     console.log('Default location for level 1');
+            //     x = 50;
+            // }
+            console.log(dimensions.width, n, innerIndex);
             break;
+
         case 2:
+            x = 169;
+            y = 140;
             break;
         case 3:
             break;
     }
 
+    console.log(x, y);
     return newNode(numberStr, name, x, y);
 }
 
-function demo (){
-    var s = document.getElementById('svgElement'),
-        n = prepareNode('Bob', {'t1': null}),
-        sideArray = ['Top', 'Bottom', 'Left'];
-    s.appendChild(n);
+function demo(){
+    var n = prepareNode('Bob');
 
-    // for (var i = 0; i < sideArray.length; i++) {
-    //      console.log(connectionPoint(n, sideArray[i]));
-    // }
-    lConnector(s, connectionPoint(n, 'Bottom'), connectionPoint(document.getElementById('existingItem'), 'Left'));
+    svgElement = document.getElementById('svgElement');
+    svgElement.appendChild(n);
+
+    // lConnector(svgElement, connectionPoint(n, 'Bottom'), connectionPoint(document.getElementById('existingItem'), 'Left'));
 }
 
 // window.addEventListener('load', demo);
