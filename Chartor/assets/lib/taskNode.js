@@ -137,6 +137,7 @@ function Node(name){
 				console.log(parentId + ' isParentOf ' + selectedNode);
 				console.log(nodeObjects[parentId].children);
 			}
+			document.dispatchEvent(new CustomEvent('redrawTree'));
 		});
 	};
 	
@@ -197,15 +198,21 @@ function drawTree(treeRoot, currentNumberArray){
 	var node = prepareNode(treeRoot.name, currentNumberArray),
 		children = treeRoot.children;
 
+		// console.log(treeRoot);
+		// console.log(children);
+		console.log(currentNumberArray);
+
 	document.getElementById('svgElement').appendChild(node);
 	
 	for(var childIndex in children){
+		// Children contains Id of child nodes, look up node instance from nodeObjects
 		var tempArray = currentNumberArray;
-		tempArray.push(childIndex);
-		drawTree(children[childIndex], tempArray);
+		tempArray.push(parseInt(childIndex) + 1);
+		drawTree(nodeObjects[children[childIndex]], tempArray);
 	}
 }
 
 document.addEventListener('redrawTree', function(e) {
+	console.log('Drawing');
 	drawTree(nodeObjects[rootNode], []);
 });
