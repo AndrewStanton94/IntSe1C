@@ -124,31 +124,28 @@ function prepareNode (name, numberArray){
         level = determineLevel(numberArray),
         numberStr = nodeNumberStr(numberArray),
         dimensions = getSVGdimensions('svgElement');
-    // Retrieve parent OR have it passed
-    // Use that plus set level constants to get position
-        if(numberArray){
-            innerIndex = numberArray[numberArray.length-1];
-        }
+
+    if(numberArray){
+        innerIndex = numberArray[numberArray.length-1];
+    }
 
 
     switch (level){
         case 0:
-            x  = (dimensions.width / 2) - (nodeWidth / 2);
+            x  = (dimensions.width - nodeWidth) / 2;
             y  = 10;
-            console.log(dimensions.width, x, y);    // dimensions.width can be 0. Race Condition?
             break;
         case 1:
+            console.log(innerIndex);
             y = 100;
-
-            n = nodeObjects[rootNode].children.length;
-            x = (dimensions.width / n) * innerIndex;
-            // console.log(dimensions.width, n, innerIndex);
+            x = (nodeWidth + 25) * (innerIndex - 1);
             break;
 
         case 2:
             x = 169;
-            y = 140;
+            y = 200;
             break;
+
         case 3:
             break;
     }

@@ -131,9 +131,11 @@ function Node(name){
 				return;
 			}
 			if (selectedParentOptionElem.dataset.id){
-				console.log('Valid non root node selected');
 				var parentId = selectedParentOptionElem.dataset.id;
-				nodeObjects[parentId].appendChild(selectedNode);
+				// console.log('Valid non root node selected');
+
+				nodeObjects[parentId].appendChild(selectedNode);	// Add this to parents Children
+				this.editParent(parentId);
 				console.log(parentId + ' isParentOf ' + selectedNode);
 				console.log(nodeObjects[parentId].children);
 			}
