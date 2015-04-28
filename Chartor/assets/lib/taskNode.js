@@ -52,6 +52,22 @@ function Node(name){
 						console.log(nodeObjects[currentChild].children);
 						for(var j = 0; j < nodeObjects[currentChild].children.length; j++) {
 
+							var key = nodeObjects[currentChild].children[j],
+								me = document.getElementById(key);
+							document.getElementById('inputArea').removeChild(me);	// Delete from sidebar
+							for(var k = 0; k < nodeObjects.length; k++){		// Delete from array
+								if(nodeObjects[k] && nodeObjects[k].key == key){
+									nodeObjects.splice(k, 1, null);		// Prevent index corruption
+									for(k = 0; k < nodeObjects.length; k++){
+										if (nodeObjects[k]){
+											nodeObjects[k].buildOptions();
+										}
+									}
+								}
+							}
+
+
+							document.dispatchEvent(new CustomEvent('redrawTree'));
 						}
 					}
 				}
@@ -222,6 +238,9 @@ document.getElementById('nameInput').addEventListener('submit',
 );
 
 function drawTree(treeRoot, currentNumberArray){
+	if(!treeRoot){
+		return;
+	};
 	var node = prepareNode(treeRoot.name, currentNumberArray),
 		children = treeRoot.children;
 

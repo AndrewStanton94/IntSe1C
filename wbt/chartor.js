@@ -12,6 +12,7 @@ function getAttrAsInt (elem, attr){
 function connectionPoint(node, side){
     // Given node, get rect and determine where to connect lines to.
     // Options: Top, Bottom, Left
+    if(!node){return;}
     var elem = node.children[0],    // Need to use rectangle as g has no dimension attrs to read.
         x = getAttrAsInt(elem, 'x'),
         y = getAttrAsInt(elem, 'y');
