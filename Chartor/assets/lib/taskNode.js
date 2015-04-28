@@ -37,14 +37,28 @@ function Node(name){
 	};
 
 	this.removeChildById = function(id){
+		console.log('In removeChildById');
+		console.log(this);
 		for (var i = 0; i < this.children.length; i++){
-			if(this.children[i].key === id){	// Found it 
-				if (this.children[i].hasChildren()){	// Item to delete has children
-					if (!prompt('The node you are deleting has children. Continue?')){
-						return;	// Don't delete
+			var currentChild = this.children[i];
+			if(currentChild === id){	// Found element to delete
+				console.log('Found target');
+				if (nodeObjects[currentChild].hasChildren()){	// Item to delete has children
+					if(!confirm('The node you are deleting has children. Continue?')){
+						return false;	// Don't delete
+					}
+					else{	// Purge grand children
+						console.log('purge grandchildren');
+						console.log(nodeObjects[currentChild].children);
+						for(var j = 0; j < nodeObjects[currentChild].children.length; j++) {
+							var cc = document.getElementById( nodeObjects[currentChild].children[j] + 'del');
+							console.log(cc);
+							cc.dispatchEvent('click');
+						}
 					}
 				}
 				this.children.splice(i, 1);	// Delete
+				return true;	// Return here. Succeeded, key is unique
 			}
 		}
 	};
@@ -66,7 +80,7 @@ function Node(name){
 		optionsWrite.insertAdjacentHTML('beforeend', option);
 
 		for (i = 0; i < nodeObjects.length; i++){
-			if(nodeObjects[i].key != this.key){
+			if(nodeObjects[i] && nodeObjects[i].key != this.key){
 				option = document.createElement('option');
 				option.textContent = nodeObjects[i].name;
 				option.dataset.id = i;
@@ -83,20 +97,30 @@ function Node(name){
 
 	// Delete node
 	this.addDeleteListener = function addDeleteListener(){
-		var o = this.key + 'del',
-			key = this.key,
+		var key = this.key,
+			o = key + 'del',
 			delBtn = document.getElementById(o);
 		
 		delBtn.addEventListener('click', function(){
-			var me = document.getElementById(key);
-			document.getElementById('inputArea').removeChild(me);
-			for(var i = 0; i < nodeObjects.length; i++){
-				if(nodeObjects[i].key == key){
-					nodeObjects.splice(i, 1);
-					for(i = 0; i < nodeObjects.length; i++){
-						nodeObjects[i].buildOptions();
+			var me = document.getElementById(key),
+				selectedNode = nodeObjects[key],
+				parentNode = nodeObjects[selectedNode.parent];
+
+			console.log(selectedNode);
+			console.log(parentNode);
+			if(parentNode.removeChildById(key)){		// Delete from tree, warns if exists subtree
+				document.getElementById('inputArea').removeChild(me);	// Delete from sidebar
+				for(var i = 0; i < nodeObjects.length; i++){		// Delete from array
+					if(nodeObjects[i] && nodeObjects[i].key == key){
+						nodeObjects.splice(i, 1, null);		// Prevent index corruption
+						for(i = 0; i < nodeObjects.length; i++){
+							if (nodeObjects[i]){
+								nodeObjects[i].buildOptions();
+							}
+						}
 					}
 				}
+				document.dispatchEvent(new CustomEvent('redrawTree'));
 			}
 		});
 	};
@@ -128,9 +152,8 @@ function Node(name){
 			if (selectedParentOptionElem.dataset.id === 'ROOT'){
 				console.log(selectedNode + ' is root');
 				rootNode = selectedNode;
-				return;
 			}
-			if (selectedParentOptionElem.dataset.id){
+			else if(selectedParentOptionElem.dataset.id){
 				var parentId = selectedParentOptionElem.dataset.id;
 				// console.log('Valid non root node selected');
 
@@ -166,7 +189,9 @@ addNode.addEventListener('click', function(){
 		nodeObjects.push(node);
 		node.constructor();
 		for (var i = 0; i < nodeObjects.length; i++){ 
-			nodeObjects[i].buildOptions();
+			if (nodeObjects[i]){
+				nodeObjects[i].buildOptions();
+			}
 		}
 		nodeName.style.color = 'black';
 		nameInput.value = '';
@@ -185,7 +210,9 @@ document.getElementById('nameInput').addEventListener('submit',
 			nodeObjects.push(node);
 			node.constructor();
 			for (var i = 0; i < nodeObjects.length; i++){ 
-				nodeObjects[i].buildOptions();
+				if (nodeObjects[i]){
+					nodeObjects[i].buildOptions();
+				}
 			}
 			nodeName.style.color = 'black';
 			nameInput.value = '';
