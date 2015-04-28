@@ -8,7 +8,7 @@
 		
 		
 </aside>
-<svg id = "svgElement" width = 700 height = 500 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="background: #ccc" >
+<svg id = "svgElement" width = 70% height = 500 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="background: #ccc" >
     </svg>
 </section>
 <?php

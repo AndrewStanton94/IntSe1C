@@ -23,7 +23,9 @@ function connectionPoint(node, side){
                 break;
 
             case 'Bottom':
-                y += getAttrAsInt(elem, 'height');      // Flows into Top to get x value
+                x += (getAttrAsInt(elem, 'width')/3);
+                y += getAttrAsInt(elem, 'height');
+                break;
 
             case 'Top':
                 x += (getAttrAsInt(elem, 'width')/2);
@@ -136,33 +138,28 @@ function getSVGdimensions(id){
 }
 
 function prepareNode (name, numberArray){
-    var x, y, n, innerIndex,
+    var x = 0,
+        y = 0,
         level = determineLevel(numberArray),
         numberStr = nodeNumberStr(numberArray),
         dimensions = getSVGdimensions('svgElement');
-
-    if(numberArray){
-        innerIndex = numberArray[numberArray.length-1];
-    }
-
 
     switch (level){
         case 0:
             x  = (dimensions.width - nodeWidth) / 2;
             y  = 10;
             break;
-        case 1:
-            console.log(innerIndex);
-            y = 100;
-            x = (nodeWidth + 25) * (innerIndex - 1);
+
+        case 3:
             break;
 
         case 2:
-            x = 169;
-            y = 200;
-            break;
+            x += 75;
+            y += 100 * numberArray[1];
 
-        case 3:
+        case 1:
+            y += 100;
+            x += (nodeWidth + 50) * (numberArray[0] - 1);
             break;
     }
 
