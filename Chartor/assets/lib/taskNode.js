@@ -51,9 +51,7 @@ function Node(name){
 						console.log('purge grandchildren');
 						console.log(nodeObjects[currentChild].children);
 						for(var j = 0; j < nodeObjects[currentChild].children.length; j++) {
-							var cc = document.getElementById( nodeObjects[currentChild].children[j] + 'del');
-							console.log(cc);
-							cc.dispatchEvent('click');
+
 						}
 					}
 				}
