@@ -67,7 +67,7 @@ function lConnector(svgElem, node1, node2){
     drawLine(svgElem, joint, connection2);
 }
 
-function newRectComponent (parent, x, y){
+function newRectComponent (parent, x, y, level){
     // console.log('Making rect bg');
     var myRect = document.createElementNS(svgNS,'rect');
     myRect.setAttribute('id','myRectangle');
@@ -77,6 +77,7 @@ function newRectComponent (parent, x, y){
     myRect.setAttribute('height', nodeHeight);
     myRect.setAttribute('fill','red');
     myRect.setAttribute('stroke','none');
+    myRect.setAttribute('class', 'l' + level);
     parent.appendChild(myRect);
 }
 
@@ -90,9 +91,9 @@ function newTextComponent (parent, x, y, text){
     parent.appendChild(myText);
 }
 
-function newNode (number, name, x, y){
+function newNode (number, name, x, y, level){
     var g = document.createElementNS(svgNS, 'g');
-    newRectComponent(g, x, y);
+    newRectComponent(g, x, y, level);
     newTextComponent(g, x + 20, y + 20, number);
     newTextComponent(g, x + 20, y + 40, name);
     // console.log(g);
@@ -164,7 +165,7 @@ function prepareNode (name, numberArray){
     }
 
     console.log(x, y);
-    return newNode(numberStr, name, x, y);
+    return newNode(numberStr, name, x, y, level);
 }
 
 function demo(){

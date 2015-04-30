@@ -137,7 +137,26 @@ svg{
 
 rect:hover{
   fill: #7BFFC9;
-  -moz-box-shadow: 14px 12px 20px 4px #000000;
-  -webkit-box-shadow: 14px 12px 20px 4px #000000;
-  box-shadow: 14px 12px 20px 4px #000000;
+}
+
+rect.l0{
+  fill: #A9360C;
+}
+rect.l0:hover{
+  fill: #7BFFC9;
+}
+
+rect.l1{
+  fill: #AD380C;
+}
+rect.l1:hover{
+  fill: #7BFFC9;
+}
+
+
+rect.l2{
+  fill: #ED4C11;
+}
+rect.l2:hover{
+  fill: #7BFFC9;
 }
